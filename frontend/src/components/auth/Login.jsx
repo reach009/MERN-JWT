@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 
 import { useHistory } from "react-router-dom";
 
@@ -15,7 +15,7 @@ function Login() {
 
   const [error, setError] = useState();
 
-  const { setUserData } = useContext(UserContext);
+  const { userData, setUserData } = useContext(UserContext);
 
   const history = useHistory();
 
@@ -43,8 +43,14 @@ function Login() {
     }
   };
 
+  useEffect(() => {
+    if (userData.user) {
+      history.push("/");
+    }
+  }, [userData]);
+
   return (
-    <div className='login'>
+    <div className="login">
       <h2>Login</h2>
 
       {error && (
@@ -54,17 +60,17 @@ function Login() {
       <form onSubmit={submit}>
         <label>Email: </label>
         <input
-          type='email'
-          id='email'
+          type="email"
+          id="email"
           onChange={(e) => setEmail(e.target.value)}
         />
         <label>Password: </label>
         <input
-          type='password'
-          id='password'
+          type="password"
+          id="password"
           onChange={(e) => setPassword(e.target.value)}
         />
-        <input type='submit' value='Login' className='btn btn-primary' />
+        <input type="submit" value="Login" className="btn btn-primary" />
       </form>
     </div>
   );

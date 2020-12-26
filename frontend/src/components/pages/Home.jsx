@@ -1,19 +1,11 @@
-import React, { useEffect, useContext } from "react";
+import React, { useContext } from "react";
 
-import { useHistory, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import UserContext from "../../context/userContext";
 
 function Home() {
   const { userData } = useContext(UserContext);
-
-  const history = useHistory();
-
-  useEffect(() => {
-    if (!userData.user) {
-      history.push("/login");
-    }
-  }, []);
 
   return (
     <div>
@@ -22,7 +14,7 @@ function Home() {
       ) : (
         <>
           <h2>You are not logged in</h2>
-          <Link to='/login'>Login</Link>
+          <Link to="/login">Login</Link>
         </>
       )}
     </div>
