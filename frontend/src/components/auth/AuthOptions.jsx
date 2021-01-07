@@ -15,23 +15,24 @@ function AuthOptions() {
     setUserData({
       token: undefined,
       user: undefined,
+      isAuthenticated: false,
     });
 
     localStorage.setItem("auth-token", "");
   };
 
   return (
-    <nav className='auth-options'>
+    <nav className="auth-options">
       {userData.user ? (
-        <button className='btn btn-primary mr-2' onClick={logout}>
+        <button className="btn btn-primary mr-2" onClick={logout}>
           Logout
         </button>
       ) : (
         <>
-          <button className='btn btn-primary mr-2' onClick={register}>
+          <button className="btn btn-primary mr-2" onClick={register}>
             Sign Up
           </button>
-          <button className='btn btn-primary mr-2' onClick={login}>
+          <button className="btn btn-primary mr-2" onClick={login}>
             Login
           </button>
         </>

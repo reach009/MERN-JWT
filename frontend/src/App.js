@@ -1,26 +1,29 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { BrowserRouter, Switch } from "react-router-dom";
 import axios from "axios";
 import Header from "./components/layout/Header";
-import Home from "./components/pages/Home";
-import Register from "./components/auth/Register";
-import Login from "./components/auth/Login";
 import UserContext from "./context/userContext";
 import "./App.css";
+// routes
+import routes from "./config/routes";
+import AppRoute from "./components/routes/AppRoute";
 
 function App() {
   const [userData, setUserData] = useState({
     token: undefined,
     user: undefined,
+    isAuthenticated: false,
   });
 
+  let token = localStorage.getItem("auth-token");
+
   useEffect(() => {
-    const checkLoggedIn = async () => {
-      let token = localStorage.getItem("auth-token");
+    const checkedLogin = async () => {
       if (token === null) {
         localStorage.setItem("auth-token", "");
         token = "";
       }
+
       const tokenResponse = await axios.post(
         "http://localhost:5000/users/tokenIsValid",
         null,
@@ -30,27 +33,36 @@ function App() {
         const userRes = await axios.get("http://localhost:5000/users/", {
           headers: { "x-auth-token": token },
         });
+
         setUserData({
-          token,
+          token: token,
           user: userRes.data,
+          isAuthenticated: true,
         });
       }
     };
 
-    checkLoggedIn();
+    checkedLogin();
   }, []);
 
+  console.log("User data: " + JSON.stringify(userData.token));
+
   return (
-    <BrowserRouter>
-      <UserContext.Provider value={{ userData, setUserData }}>
+    <UserContext.Provider value={{ userData, setUserData }}>
+      <BrowserRouter>
         <Header />
         <Switch>
-          <Route exact path='/' component={Home} />
-          <Route path='/register' component={Register} />
-          <Route path='/login' component={Login} />
+          {routes.map((route) => (
+            <AppRoute
+              key={route.path}
+              path={route.path}
+              component={route.component}
+              isPrivate={route.isPrivate}
+            />
+          ))}
         </Switch>
-      </UserContext.Provider>
-    </BrowserRouter>
+      </BrowserRouter>
+    </UserContext.Provider>
   );
 }
 

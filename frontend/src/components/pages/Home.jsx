@@ -7,16 +7,11 @@ import UserContext from "../../context/userContext";
 function Home() {
   const { userData } = useContext(UserContext);
 
+  console.log("Home data ", userData.user);
+
   return (
     <div>
-      {userData.user ? (
-        <h1>Welcome {userData.user.displayName}</h1>
-      ) : (
-        <>
-          <h2>You are not logged in</h2>
-          <Link to="/login">Login</Link>
-        </>
-      )}
+      {userData.user ? <h1>Welcome {userData.user.displayName}</h1> : ""}
     </div>
   );
 }

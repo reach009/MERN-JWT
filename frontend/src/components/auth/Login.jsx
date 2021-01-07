@@ -33,6 +33,7 @@ function Login() {
       setUserData({
         token: loginResponse.data.token,
         user: loginResponse.data.user,
+        isAuthenticated: true,
       });
 
       localStorage.setItem("auth-token", loginResponse.data.token);
@@ -47,7 +48,7 @@ function Login() {
     if (userData.user) {
       history.push("/");
     }
-  }, [userData]);
+  }, [userData.user]);
 
   return (
     <div className="login">
