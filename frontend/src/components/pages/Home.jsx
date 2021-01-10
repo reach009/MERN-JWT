@@ -5,13 +5,13 @@ import { Link } from "react-router-dom";
 import UserContext from "../../context/userContext";
 
 function Home() {
-  const { userData } = useContext(UserContext);
+  const { userInfo } = useContext(UserContext);
 
-  console.log("Home data ", userData.user);
+  // console.log("Home data ", userInfo.user);
 
   return (
     <div>
-      {userData.user ? <h1>Welcome {userData.user.displayName}</h1> : ""}
+      {userInfo.user ? <h1>Welcome {userInfo.user.displayName}</h1> : ""}
     </div>
   );
 }

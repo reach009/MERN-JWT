@@ -15,7 +15,7 @@ function Login() {
 
   const [error, setError] = useState();
 
-  const { userData, setUserData } = useContext(UserContext);
+  const { userInfo, setUserInfo } = useContext(UserContext);
 
   const history = useHistory();
 
@@ -30,7 +30,7 @@ function Login() {
         loginUser
       );
 
-      setUserData({
+      setUserInfo({
         token: loginResponse.data.token,
         user: loginResponse.data.user,
         isAuthenticated: true,
@@ -45,10 +45,10 @@ function Login() {
   };
 
   useEffect(() => {
-    if (userData.user) {
+    if (userInfo.user) {
       history.push("/");
     }
-  }, [userData.user]);
+  }, [userInfo.user]);
 
   return (
     <div className="login">

@@ -3,13 +3,13 @@ import React, { useContext } from "react";
 import UserContext from "../../context/userContext";
 
 const AppRoutes = ({ component: Component, path, isPrivate, ...rest }) => {
-  const token = localStorage.getItem("auth-token");
+  const { userInfo } = useContext(UserContext);
 
   return (
     <Route
       path={path}
       render={(props) =>
-        isPrivate && !token ? (
+        isPrivate && !userInfo.user ? (
           <Redirect
             to={{ pathname: "/login", state: { from: props.location } }}
           />

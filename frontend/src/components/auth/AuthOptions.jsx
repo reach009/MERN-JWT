@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import UserContext from "../../context/userContext";
 
 function AuthOptions() {
-  const { userData, setUserData } = useContext(UserContext);
+  const { userInfo, setUserInfo } = useContext(UserContext);
 
   const history = useHistory();
 
@@ -12,7 +12,7 @@ function AuthOptions() {
   const login = () => history.push("/login");
 
   const logout = () => {
-    setUserData({
+    setUserInfo({
       token: undefined,
       user: undefined,
       isAuthenticated: false,
@@ -23,7 +23,7 @@ function AuthOptions() {
 
   return (
     <nav className="auth-options">
-      {userData.user ? (
+      {userInfo.user ? (
         <button className="btn btn-primary mr-2" onClick={logout}>
           Logout
         </button>
